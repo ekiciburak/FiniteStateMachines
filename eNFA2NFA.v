@@ -53,8 +53,11 @@ Proof. intros e r A x.
          unfold eps_closure in He.
          rewrite inE in He.
          apply enfa_connect_r with (q := i).
-         split; easy.
          easy.
+         easy.
+         easy.
+(*          split; easy.
+         easy. *)
 Qed.
 
 Lemma enfa_nfa_ms2A: forall (e: enfa) (r: (@enfa_state e)) (A: {set (@enfa_state e)}) (x: String),
@@ -80,7 +83,8 @@ Proof. intros e r A x.
            rewrite inE. easy.
            unfold eps_closure.
            rewrite inE. 
-           apply connect0.
+           apply epsa.
+(*            apply connect0. *)
            easy.
 Qed.
 
@@ -212,7 +216,8 @@ Proof. intros.
          rewrite inE in H0.
          rewrite inE in Hb.
          rewrite inE.
-         apply(connect_trans Hb H0).
+         apply (enfa_connect_l e i p q None Hb H0).
+(*          apply(connect_trans Hb H0). *)
        - simpl in *.
          move=>/bigcupP in H.
          destruct H as (i, Ha, Hb).
@@ -237,7 +242,8 @@ Proof. intros.
          rewrite inE in Hd.
          unfold eps_closure.
          rewrite inE.
-         apply (connect_trans Hd H0).
+         apply (enfa_connect_l e m p q None Hd H0).
+(*          apply (connect_trans Hd H0). *)
 Qed.
 
 Lemma enfa_nfa_ms_eq: forall (e: enfa) (A: {set (@enfa_state e)}) (x: String),
@@ -269,7 +275,8 @@ Proof. intros e A x.
          rewrite inE. easy.
          unfold eps_closure.
          rewrite inE.
-         apply connect0.
+         apply epsa.
+(*          apply connect0. *)
          
          apply/bigcupP.
          exists q.
@@ -343,7 +350,8 @@ Proof. intros.
            split.
            + unfold eps_closure.
              rewrite inE.
-             apply connect0.
+             apply epsa.
+(*              apply connect0. *)
            + easy.
        - rewrite HH.
          unfold not.

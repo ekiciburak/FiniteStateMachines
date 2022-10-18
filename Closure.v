@@ -268,3 +268,12 @@ Qed.
 (* TODO: Formalize closure under concatenation and Kleene star (asterate) *)
 
 
+
+
+
+
+
+
+
+
+
