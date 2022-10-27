@@ -268,6 +268,47 @@ Qed.
 (* TODO: Formalize closure under concatenation and Kleene star (asterate) *)
 
 
+Definition enfa_concat (A B: nfa): enfa.
+Proof. destruct A as (Q1, s1, delta1, F1).
+       destruct B as (Q2, s2, delta2, F2).
+       unshelve econstructor.
+       - exact (sum_finType Q1 Q2).
+       - intros [q | q] [a | ].
+         + exact (inl @: (delta1 q a)).
+         + case (q \in F1).
+           ++ (* exact ([set x | match x with
+                                 | inl x1 => x1 \in F1
+                                 | inr x2 => x2 \in s2
+                              end ]). *)
+              exact (setU (inr @: s2) (inl @: [set q])).
+              (* exact (inr @: s2). *)
+           ++ exact (inl @: [set q]).  (* exact set0. *) (* exact (inl @: set0). *)
+         + exact (inr @: (delta2 q a)).
+         + exact (inr @: [set q]). (* exact set0. *) (* exact (inr @: set0). *)
+       - exact (inl @: s1).
+       - exact (inr @: F2).
+       - intros [p | p].
+         + case_eq (p \in F1); intros.
+           ++ apply/setUP.
+              right. apply/imsetP. exists p.
+              rewrite inE. easy. easy.
+           ++ apply/imsetP. exists p.
+              rewrite inE. easy. easy.
+         + apply/imsetP. exists p.
+           rewrite inE. easy. easy.
+       - intros [p| p] [q| q] [r| r] [a| ] H.
+         simpl in *.
+         case_eq (q \in F1); intros.
+         + rewrite inE in H1.
+           move=>/orP in H1.
+           destruct H1 as [H1 | H1].
+           ++ move=>/imsetP in H.
+              move=>/imsetP in H1.
+              destruct H as (x, Ha, Hb).
+              destruct H1 as (y, Hc, Hd).
+              apply/imsetP.
+              exists x. easy.
+Admitted.
 
 
 

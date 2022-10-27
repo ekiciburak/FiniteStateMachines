@@ -57,6 +57,8 @@ Defined.
 
 Print ex1.
 
+(* Eval cbn in (nfa_multistepA ex1 [set q1] (glue (glue eps a) b)). *)
+
 Lemma example: (nfa_multistep ex1 [set q1] (glue (glue eps a) b)) = [set q1; q3].
 Proof. apply/setP.
        move => x.
