@@ -7,5 +7,8 @@ eNFA.v
 eNFA2NFA.v
 eNFA2DFA.v
 Closure.v
+MNR.v
+Derivative.v
+KleeneAlgebra.v
 
 -Q . FA
